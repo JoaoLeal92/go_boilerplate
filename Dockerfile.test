@@ -1,0 +1,10 @@
+FROM golang:alpine
+
+RUN set -ex; apk update; apk add --no-cache git; apk add bash
+WORKDIR /go/src/github.com/Projetos/go_boilerplate
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+CMD CGO_ENABLED=0 ./wait-for-it.sh -t 60 postgres:5432; go test -v -vet=off ./... -p 1 -coverprofile=cover.txt

@@ -1,0 +1,19 @@
+[global]
+secret-key="secret-key"
+
+[db]
+user=""
+name=""
+password=""
+port=""
+host=""
+silent-log-mode=false
+
+[tests]
+  [tests.db]
+  user=""
+  name=""
+  password=""
+  port=""
+  host=""
+  silent-log-mode=""

@@ -1,0 +1,20 @@
+createdb:
+	docker exec -it <container_id> createdb --username=<username> --owner=<owner> <db_name>
+	docker exec -it <container_id> /bin/sh -c "psql -U <username> <db_name> -c 'CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"'"
+
+dropdb:
+	docker exec -it <container_id> dropdb --username=<username> <db_name>
+
+migrationup:
+	migrate -path sql -databse "postgresql://{db_user}:{db_password}@localhost:{db_port}/{db_name}?sslmode=disable" -verbose up
+
+migratedown:
+	migrate -path sql -database "postgresql://{db_user}:{db_password}@localhost:{db_port}/{db_name}?sslmode=disable" -verbose down
+
+test:
+	docker-compose -f docker-compose.test.yml up --build --remove-orphans
+
+test-cover:
+	go tool cover -html=cover.txt -o cover.html
+
+.PHONY: migrationup migratedown test cover createdb dropdb
