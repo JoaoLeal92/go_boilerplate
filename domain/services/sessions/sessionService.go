@@ -27,17 +27,17 @@ func NewSessionService(svc *services.Service) *Service {
 }
 
 // AuthenticateUserService authenticates registered user
-func (s *Service) AuthenticateUserService(email string, password string) (string, *entities.User, error) {
+func (s *Service) AuthenticateUserService(user *entities.User) (string, *entities.User, error) {
 	userRepo := s.svc.Db.Users()
 
-	user := userRepo.FindUserByEmail(email)
+	userData := userRepo.FindUserByEmail(user.Email)
 
-	if user.Email == "" {
+	if userData.Email == "" {
 		return "", &entities.User{}, errors.New("Wrong e-mail/password combination")
 	}
 
 	// Check if passwords match
-	err := s.svc.Hash.CompareHashAndPassword(user.Password, password)
+	err := s.svc.Hash.CompareHashAndPassword(userData.Password, user.Password)
 	if err != nil {
 		return "", &entities.User{}, errors.New("Wrong e-mail/password combination")
 	}
@@ -46,7 +46,7 @@ func (s *Service) AuthenticateUserService(email string, password string) (string
 	expirationTime := time.Now().Add(time.Hour * 24)
 
 	claims := &claim{
-		UserID: user.ID.String(),
+		UserID: userData.ID.String(),
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
 		},
@@ -60,5 +60,5 @@ func (s *Service) AuthenticateUserService(email string, password string) (string
 		return "", &entities.User{}, errors.New("Internal server error")
 	}
 
-	return tokenString, user, nil
+	return tokenString, userData, nil
 }

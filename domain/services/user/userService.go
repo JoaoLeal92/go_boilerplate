@@ -20,28 +20,28 @@ func NewUserService(svc *services.Service) *Service {
 }
 
 // CreateUserService creates new user, if it doesn't already exists
-func (s *Service) CreateUserService(userName string, email string, password string) (*entities.User, error) {
+func (s *Service) CreateUserService(user *entities.User) (*entities.User, error) {
 	userRepo := s.svc.Db.Users()
 
-	user := userRepo.FindUserByEmail(email)
+	userData := userRepo.FindUserByEmail(user.Email)
 
-	if user.Email != "" {
+	if userData.Email != "" {
 		return &entities.User{}, errors.New("Email already in use")
 	}
 
-	hashedPassword, err := s.svc.Hash.GenerateHash(password)
+	hashedPassword, err := s.svc.Hash.GenerateHash(user.Password)
 	if err != nil {
 		return &entities.User{}, err
 	}
 
-	user.Password = string(hashedPassword)
-	user.Name = string(userName)
-	user.Email = string(email)
+	userData.Password = string(hashedPassword)
+	userData.Name = string(user.Name)
+	userData.Email = string(user.Email)
 
-	err = userRepo.CreateUser(user)
+	err = userRepo.CreateUser(userData)
 	if err != nil {
 		return &entities.User{}, err
 	}
 
-	return user, nil
+	return userData, nil
 }

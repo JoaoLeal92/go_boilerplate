@@ -3,6 +3,7 @@ package sessions
 import (
 	"testing"
 
+	"github.com/JoaoLeal92/go_boilerplate/domain/entities"
 	"github.com/JoaoLeal92/go_boilerplate/domain/services"
 	"github.com/JoaoLeal92/go_boilerplate/infra/config"
 	"github.com/JoaoLeal92/go_boilerplate/infra/hash"
@@ -56,13 +57,23 @@ func TestAuthenticationTestSuite(t *testing.T) {
 func (s *authenticationServiceTestSuite) TestAuthenticateUserService() {
 	s.db.Users().CreateUser(fixtures.NewFixtureUser())
 
-	tokenString, _, _ := s.sessionService.AuthenticateUserService("joao@teste.com", "12345678")
+	user := entities.User{
+		Email:    "joao@teste.com",
+		Password: "12345678",
+	}
+
+	tokenString, _, _ := s.sessionService.AuthenticateUserService(&user)
 
 	s.Suite.Require().NotEmpty(tokenString, "Authentication error, Expected token string")
 }
 
 func (s *authenticationServiceTestSuite) TestAuthenticateWrongUser() {
-	tokenString, _, err := s.sessionService.AuthenticateUserService("wrong@email.com", "12345678")
+	user := entities.User{
+		Email:    "wrong@email.com",
+		Password: "12345678",
+	}
+
+	tokenString, _, err := s.sessionService.AuthenticateUserService(&user)
 
 	s.Suite.Require().Empty(tokenString, "Authentication error, Expected token string to be empty")
 	if s.Suite.Error(err) {
@@ -73,7 +84,12 @@ func (s *authenticationServiceTestSuite) TestAuthenticateWrongUser() {
 func (s *authenticationServiceTestSuite) TestAuthenticateWrongPassword() {
 	s.db.Users().CreateUser(fixtures.NewFixtureUser())
 
-	tokenString, _, err := s.sessionService.AuthenticateUserService("joao@teste.com", "wrong password")
+	user := entities.User{
+		Email:    "joao@teste.com",
+		Password: "wrong password",
+	}
+
+	tokenString, _, err := s.sessionService.AuthenticateUserService(&user)
 
 	s.Suite.Require().Empty(tokenString, "Authentication error, Expected token string to be empty")
 	if s.Suite.Error(err) {

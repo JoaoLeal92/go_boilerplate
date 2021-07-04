@@ -64,7 +64,13 @@ func (s *userServiceTestSuite) TestCreateUserService() {
 	expectedResult.Email = "joao@teste.com"
 	expectedResult.Password = "12345678"
 
-	user, err := s.userService.CreateUserService("João", "joao@teste.com", "12345678")
+	userData := entities.User{
+		Name:     "João",
+		Email:    "joao@teste.com",
+		Password: "12345678",
+	}
+
+	user, err := s.userService.CreateUserService(&userData)
 
 	s.Suite.Equal(expectedResult.Name, user.Name)
 	s.Suite.Equal(expectedResult.Email, user.Email)
@@ -78,7 +84,13 @@ func (s *userServiceTestSuite) TestCreateUserWithInvalidEmail() {
 
 	s.db.Users().CreateUser(fixtures.NewFixtureUser())
 
-	user, err := s.userService.CreateUserService("João 2", "joao@teste.com", "12345678")
+	userData := entities.User{
+		Name:     "João 2",
+		Email:    "joao@teste.com",
+		Password: "12345678",
+	}
+
+	user, err := s.userService.CreateUserService(&userData)
 
 	s.Suite.Equal(&expectedResult, user)
 	s.Suite.Error(err)
@@ -90,7 +102,13 @@ func (s *userServiceTestSuite) TestCreateUserWithInvalidEmail() {
 func (s *userServiceTestSuite) TestCreateUserWithInvalidPassword() {
 	expectedResult := entities.User{}
 
-	user, err := s.userService.CreateUserService("João", "joao@teste.com", "")
+	userData := entities.User{
+		Name:     "João",
+		Email:    "joao@teste.com",
+		Password: "",
+	}
+
+	user, err := s.userService.CreateUserService(&userData)
 
 	s.Suite.Equal(user, &expectedResult, fmt.Sprintf("Expected created user to be %+v", expectedResult))
 	s.Suite.Error(err)
@@ -110,7 +128,13 @@ func (s *userServiceTestSuite) TestCreateUserError() {
 
 	expectedResult := entities.User{}
 
-	user, err := s.userService.CreateUserService("João", "joao@teste.com", "12345678")
+	userData := entities.User{
+		Name:     "João",
+		Email:    "joao@teste.com",
+		Password: "12345678",
+	}
+
+	user, err := s.userService.CreateUserService(&userData)
 
 	s.Suite.Equal(user, &expectedResult, fmt.Sprintf("Expected created user to be %+v", expectedResult))
 	s.Suite.Error(err)
