@@ -26,7 +26,10 @@ func NewUsersController(s contract.UserService, cfg *config.Config) *UsersContro
 
 // CreateUserController creates new user
 func (ctrl *UsersController) CreateUserController(c *gin.Context) {
-	var userData viewmodels.CreateUserViewmodel
+	var (
+		userData         viewmodels.CreateUserViewmodel
+		userResponseData viewmodels.UserResponseViewmodel
+	)
 
 	if err := c.ShouldBindBodyWith(&userData, binding.JSON); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -40,5 +43,10 @@ func (ctrl *UsersController) CreateUserController(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, returnedUser)
+	userResponseData.Name = returnedUser.Name
+	userResponseData.Email = returnedUser.Email
+	userResponseData.CreatedAt = returnedUser.CreatedAt
+	userResponseData.UpdatedAt = returnedUser.UpdatedAt
+
+	c.JSON(http.StatusOK, userResponseData)
 }

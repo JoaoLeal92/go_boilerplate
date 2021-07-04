@@ -26,7 +26,10 @@ func NewSessionsController(s contract.SessionService, cfg *config.Config) *Sessi
 
 // CreateSession creates session for registered user
 func (ctrl *SessionsController) CreateSession(c *gin.Context) {
-	var userData viewmodels.CreateSessionViewModel
+	var (
+		userData         viewmodels.CreateSessionViewModel
+		userResponseData viewmodels.UserResponseViewmodel
+	)
 
 	if err := c.ShouldBindBodyWith(&userData, binding.JSON); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -41,6 +44,11 @@ func (ctrl *SessionsController) CreateSession(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"token": tokenString, "user": user})
+	userResponseData.Name = user.Name
+	userResponseData.Email = user.Email
+	userResponseData.CreatedAt = user.CreatedAt
+	userResponseData.UpdatedAt = user.UpdatedAt
+
+	c.JSON(http.StatusOK, gin.H{"token": tokenString, "user": userResponseData})
 	return
 }
