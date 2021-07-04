@@ -5,6 +5,7 @@ import (
 
 	"github.com/JoaoLeal92/go_boilerplate/domain/contract"
 	"github.com/JoaoLeal92/go_boilerplate/infra/config"
+	"github.com/JoaoLeal92/go_boilerplate/server/viewmodels"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 )
@@ -13,11 +14,6 @@ import (
 type SessionsController struct {
 	service contract.SessionService
 	cfg     *config.Config
-}
-
-type authenticateUserData struct {
-	Email    string `json:"email" binding:"required,email"`
-	Password string `json:"password" binding:"required,min=8"`
 }
 
 // NewSessionsController creates new session controller
@@ -30,8 +26,8 @@ func NewSessionsController(s contract.SessionService, cfg *config.Config) *Sessi
 
 // CreateSession creates session for registered user
 func (ctrl *SessionsController) CreateSession(c *gin.Context) {
-	// Validate body content
-	var userData authenticateUserData
+	var userData viewmodels.CreateSessionViewModel
+
 	if err := c.ShouldBindBodyWith(&userData, binding.JSON); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
