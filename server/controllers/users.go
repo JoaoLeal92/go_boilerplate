@@ -3,8 +3,8 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/JoaoLeal92/goals_backend/domain/contract"
-	"github.com/JoaoLeal92/goals_backend/infra/config"
+	"github.com/JoaoLeal92/go_boilerplate/domain/contract"
+	"github.com/JoaoLeal92/go_boilerplate/infra/config"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 )

@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"github.com/JoaoLeal92/goals_backend/infra/config"
+	"github.com/JoaoLeal92/go_boilerplate/infra/config"
 )
 
 // ConnectDataBase Connects to database

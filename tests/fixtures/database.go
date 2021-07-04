@@ -7,7 +7,7 @@ import (
 
 	"errors"
 
-	"github.com/JoaoLeal92/goals_backend/repositories"
+	"github.com/JoaoLeal92/go_boilerplate/repositories"
 )
 
 // PrepareDatabase cleans up database for testing

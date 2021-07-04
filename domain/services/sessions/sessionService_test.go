@@ -3,11 +3,11 @@ package sessions
 import (
 	"testing"
 
-	"github.com/JoaoLeal92/goals_backend/domain/services"
-	"github.com/JoaoLeal92/goals_backend/infra/config"
-	"github.com/JoaoLeal92/goals_backend/infra/hash"
-	"github.com/JoaoLeal92/goals_backend/repositories"
-	"github.com/JoaoLeal92/goals_backend/tests/fixtures"
+	"github.com/JoaoLeal92/go_boilerplate/domain/services"
+	"github.com/JoaoLeal92/go_boilerplate/infra/config"
+	"github.com/JoaoLeal92/go_boilerplate/infra/hash"
+	"github.com/JoaoLeal92/go_boilerplate/repositories"
+	"github.com/JoaoLeal92/go_boilerplate/tests/fixtures"
 	"github.com/stretchr/testify/suite"
 )
 

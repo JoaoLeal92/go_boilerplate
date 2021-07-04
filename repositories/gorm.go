@@ -3,9 +3,9 @@ package repositories
 import (
 	"fmt"
 
-	"github.com/JoaoLeal92/goals_backend/domain/contract"
-	"github.com/JoaoLeal92/goals_backend/infra/config"
-	"github.com/JoaoLeal92/goals_backend/repositories/users"
+	"github.com/JoaoLeal92/go_boilerplate/domain/contract"
+	"github.com/JoaoLeal92/go_boilerplate/infra/config"
+	"github.com/JoaoLeal92/go_boilerplate/repositories/users"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

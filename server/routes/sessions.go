@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/JoaoLeal92/goals_backend/server/controllers"
+	"github.com/JoaoLeal92/go_boilerplate/server/controllers"
 	"github.com/gin-gonic/gin"
 )
 

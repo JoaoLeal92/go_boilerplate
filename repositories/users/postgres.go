@@ -3,7 +3,7 @@ package users
 import (
 	"errors"
 
-	"github.com/JoaoLeal92/goals_backend/domain/entities"
+	"github.com/JoaoLeal92/go_boilerplate/domain/entities"
 	"gorm.io/gorm"
 )
 

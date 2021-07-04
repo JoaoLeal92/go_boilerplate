@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	entities "github.com/JoaoLeal92/goals_backend/domain/entities"
+	entities "github.com/JoaoLeal92/go_boilerplate/domain/entities"
 	mock "github.com/stretchr/testify/mock"
 )
 

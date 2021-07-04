@@ -1,6 +1,6 @@
 package contract
 
-import "github.com/JoaoLeal92/goals_backend/domain/entities"
+import "github.com/JoaoLeal92/go_boilerplate/domain/entities"
 
 // RepoManager repository manager interface
 type RepoManager interface {

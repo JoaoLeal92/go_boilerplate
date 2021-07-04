@@ -1,9 +1,9 @@
 package services
 
 import (
-	"github.com/JoaoLeal92/goals_backend/domain/contract"
-	"github.com/JoaoLeal92/goals_backend/infra/config"
-	"github.com/JoaoLeal92/goals_backend/infra/hash"
+	"github.com/JoaoLeal92/go_boilerplate/domain/contract"
+	"github.com/JoaoLeal92/go_boilerplate/infra/config"
+	"github.com/JoaoLeal92/go_boilerplate/infra/hash"
 )
 
 // Service Generic service struct

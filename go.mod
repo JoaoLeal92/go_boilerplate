@@ -1,4 +1,4 @@
-module github.com/JoaoLeal92/goals_backend
+module github.com/JoaoLeal92/go_boilerplate
 
 go 1.16
 

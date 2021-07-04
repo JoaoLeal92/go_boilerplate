@@ -1,7 +1,7 @@
 package contract
 
 import (
-	"github.com/JoaoLeal92/goals_backend/domain/entities"
+	"github.com/JoaoLeal92/go_boilerplate/domain/entities"
 )
 
 // UserService user service interface

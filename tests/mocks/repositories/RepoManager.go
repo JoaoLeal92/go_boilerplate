@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	contract "github.com/JoaoLeal92/goals_backend/domain/contract"
+	contract "github.com/JoaoLeal92/go_boilerplate/domain/contract"
 	mock "github.com/stretchr/testify/mock"
 )
 

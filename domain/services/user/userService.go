@@ -3,8 +3,8 @@ package user
 import (
 	"errors"
 
-	"github.com/JoaoLeal92/goals_backend/domain/entities"
-	"github.com/JoaoLeal92/goals_backend/domain/services"
+	"github.com/JoaoLeal92/go_boilerplate/domain/entities"
+	"github.com/JoaoLeal92/go_boilerplate/domain/services"
 )
 
 // Service user service struct

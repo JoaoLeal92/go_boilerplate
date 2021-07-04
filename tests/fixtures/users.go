@@ -1,6 +1,6 @@
 package fixtures
 
-import "github.com/JoaoLeal92/goals_backend/domain/entities"
+import "github.com/JoaoLeal92/go_boilerplate/domain/entities"
 
 // NewFixtureUser returns a fixture user entity
 func NewFixtureUser() *entities.User {

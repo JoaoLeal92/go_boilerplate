@@ -4,8 +4,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/JoaoLeal92/goals_backend/domain/entities"
-	"github.com/JoaoLeal92/goals_backend/domain/services"
+	"github.com/JoaoLeal92/go_boilerplate/domain/entities"
+	"github.com/JoaoLeal92/go_boilerplate/domain/services"
 	"github.com/dgrijalva/jwt-go"
 )
 
