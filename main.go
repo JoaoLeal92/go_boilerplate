@@ -11,6 +11,7 @@ import (
 	"github.com/JoaoLeal92/go_boilerplate/domain/services/user"
 	"github.com/JoaoLeal92/go_boilerplate/infra/config"
 	"github.com/JoaoLeal92/go_boilerplate/infra/hash"
+	"github.com/JoaoLeal92/go_boilerplate/infra/mapper"
 	"github.com/JoaoLeal92/go_boilerplate/repositories"
 	"github.com/JoaoLeal92/go_boilerplate/server/controllers"
 	"github.com/JoaoLeal92/go_boilerplate/server/routes"
@@ -33,13 +34,14 @@ func main() {
 
 	hashProvider := hash.NewProvider()
 	svc := services.NewService(conn, hashProvider, &cfg)
+	structMapper := mapper.NewMapper(true)
 
 	var (
 		userService    = user.NewUserService(svc)
 		sessionService = sessions.NewSessionService(svc)
 
-		usersConroller     = controllers.NewUsersController(userService, &cfg)
-		sessionsController = controllers.NewSessionsController(sessionService, &cfg)
+		usersConroller     = controllers.NewUsersController(userService, &cfg, structMapper)
+		sessionsController = controllers.NewSessionsController(sessionService, &cfg, structMapper)
 	)
 
 	r := gin.Default()

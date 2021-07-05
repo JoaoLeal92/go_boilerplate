@@ -14,15 +14,17 @@ import (
 
 // UsersController user controller
 type UsersController struct {
-	service contract.UserService
-	cfg     *config.Config
+	service      contract.UserService
+	cfg          *config.Config
+	structMapper *mapper.Mapper
 }
 
 // NewUsersController instantiates a new controller
-func NewUsersController(s contract.UserService, cfg *config.Config) *UsersController {
+func NewUsersController(s contract.UserService, cfg *config.Config, structMapper *mapper.Mapper) *UsersController {
 	return &UsersController{
-		service: s,
-		cfg:     cfg,
+		service:      s,
+		cfg:          cfg,
+		structMapper: structMapper,
 	}
 }
 
@@ -34,14 +36,12 @@ func (ctrl *UsersController) CreateUserController(c *gin.Context) {
 		userEntity       entities.User
 	)
 
-	structMapper := mapper.NewMapper(true)
-
 	if err := c.ShouldBindBodyWith(&userData, binding.JSON); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	err := structMapper.Decode(&userData, &userEntity)
+	err := ctrl.structMapper.Decode(&userData, &userEntity)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -54,16 +54,11 @@ func (ctrl *UsersController) CreateUserController(c *gin.Context) {
 		return
 	}
 
-	err = structMapper.Decode(returnedUser, &userResponseData)
+	err = ctrl.structMapper.Decode(returnedUser, &userResponseData)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	// userResponseData.Name = returnedUser.Name
-	// userResponseData.Email = returnedUser.Email
-	// userResponseData.CreatedAt = returnedUser.CreatedAt
-	// userResponseData.UpdatedAt = returnedUser.UpdatedAt
 
 	c.JSON(http.StatusOK, userResponseData)
 }

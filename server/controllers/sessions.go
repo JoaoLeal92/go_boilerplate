@@ -14,15 +14,17 @@ import (
 
 // SessionsController session controller struct
 type SessionsController struct {
-	service contract.SessionService
-	cfg     *config.Config
+	service      contract.SessionService
+	cfg          *config.Config
+	structMapper *mapper.Mapper
 }
 
 // NewSessionsController creates new session controller
-func NewSessionsController(s contract.SessionService, cfg *config.Config) *SessionsController {
+func NewSessionsController(s contract.SessionService, cfg *config.Config, structMapper *mapper.Mapper) *SessionsController {
 	return &SessionsController{
-		service: s,
-		cfg:     cfg,
+		service:      s,
+		cfg:          cfg,
+		structMapper: structMapper,
 	}
 }
 
@@ -35,14 +37,12 @@ func (ctrl *SessionsController) CreateSession(c *gin.Context) {
 		userEntity       entities.User
 	)
 
-	structMapper := mapper.NewMapper(true)
-
 	if err := c.ShouldBindBodyWith(&userData, binding.JSON); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	err := structMapper.Decode(&userData, &userEntity)
+	err := ctrl.structMapper.Decode(&userData, &userEntity)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -54,7 +54,7 @@ func (ctrl *SessionsController) CreateSession(c *gin.Context) {
 		return
 	}
 
-	err = structMapper.Decode(user, &userResponseData)
+	err = ctrl.structMapper.Decode(user, &userResponseData)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
